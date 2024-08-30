@@ -10,6 +10,6 @@ fn int main(String[] args) {
 	// astra.close();
 
 	BeatmapSet! mapset = osu::open_beatmapset("C:/Users/antho/AppData/Local/osu!/Songs/991300 Fleshgod Apocalypse - The Deceit");
-
+	
 	return 0;
 }

@@ -28,7 +28,7 @@
     "astra": {
       // Executable or library.
       "type": "executable",
-      // "wincrt": "none",
+      "wincrt": "none",
       // Additional libraries, sources
       // and overrides of global settings here.
     },

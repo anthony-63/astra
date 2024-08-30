@@ -28,8 +28,6 @@ fn void Astra.render(this) @private {
     sdl3::set_render_draw_color(this.renderer, 30, 30, 30, 255);
 	sdl3::render_clear(this.renderer);
 	defer sdl3::render_present(this.renderer);
-
-    
 }
 
 fn void Astra.run(this) {
