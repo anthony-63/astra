@@ -6,6 +6,8 @@ import sections;
 
 struct Beatmap {
     BeatmapGeneralSection general;
+    BeatmapMetadataSection metadata;
+    BeatmapDifficultySection difficulty;
 }
 
 fn Beatmap! open_beatmap(String path) @private {
