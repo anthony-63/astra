@@ -2,14 +2,10 @@ module content::osu;
 
 import std::collections::map;
 import std::io::file;
-
-def KVSection = HashMap(<String, String>);
+import sections;
 
 struct Beatmap {
-    KVSection* general;
-    KVSection* metadata;
-    KVSection* difficulty;
-    
+    BeatmapGeneralSection general;
 }
 
 fn Beatmap! open_beatmap(String path) @private {

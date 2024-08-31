@@ -3,6 +3,7 @@ module content::osu;
 import std::collections::list;
 import std::io::file;
 import std::io;
+import sections;
 
 struct BeatmapParser {
     Beatmap* map;
@@ -28,23 +29,48 @@ fn BeatmapParser new_parser(Beatmap* map, String path) {
     return parser;
 }
 
-fn void BeatmapParser.parse(this) {
-    this.parse_general();
+macro parse_key_value_line(section, String line, String seperator) {
+    String[] pair = line.split(seperator);
+    
+    if(line.starts_with("//") || pair.len < 2) return;
+    pair[0].convert_ascii_to_lower();
+    
+    $foreach ($a: $typeof(section).membersof)
+        if(pair[0] == $a.nameof) {
+            $switch($a.typeid)
+                $case String:
+                    section.$eval($a.nameof) = pair[1];
+                $case int:
+                    section.$eval($a.nameof) = pair[1].to_int()!;
+                $case float:
+                    section.$eval($a.nameof) = pair[1].to_float()!;
+            $endswitch
+            io::printfn("%s: %s", $a.nameof, pair[1]);
+        }
+    $endforeach
 }
 
-fn void BeatmapParser.parse_general(this) @private {
-    if(!this.index_to_section("[General]")) return;
+macro parse_key_value_section(BeatmapParser* parser, section, String name, String seperator) {
+    if(!parser.index_to_section(name)) return;
+    while(!parser.is_end_of_section()) {
+        parse_key_value_line(section, parser.lines[parser.index], seperator);
+        parser.index += 1;
+    }
 }
 
-fn bool BeatmapParser.index_to_section(this, String section_name) @private {
+fn void BeatmapParser.parse(&this) {
+    parse_key_value_section(this, this.map.general, "[General]", ": ");
+}
+
+fn bool BeatmapParser.index_to_section(&this, String section_name) @private {
     foreach(i, v: this.lines) {
         if(v == section_name) {
-            this.index = i;
-            std::io::printfn("Found section %s", section_name);
+            this.index = i + 1;
+            io::printfn("Found section %s at %d", section_name, this.index);
             return true;
         }
     }
-    std::io::printfn("Failed to find section %s", section_name);
+    io::printfn("Failed to find section %s", section_name);
     return false;
 }
 
