@@ -9,6 +9,7 @@ struct Beatmap {
     BeatmapMetadataSection metadata;
     BeatmapDifficultySection difficulty;
     BeatmapTimingPointSection timing_points;
+    BeatmapEventSection events;
 }
 
 fn Beatmap! open_beatmap(String path) @private {
