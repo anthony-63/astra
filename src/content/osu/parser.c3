@@ -58,10 +58,19 @@ macro parse_key_value_section(BeatmapParser* parser, section, String name, Strin
     }
 }
 
+macro parse_normal_section(BeatmapParser* parser, section, String name) {
+    if(!parser.index_to_section(name)) return;
+    while(!parser.is_end_of_section()) {
+        section.parse_line(parser.lines[parser.index]);
+        parser.index += 1;
+    }
+}
+
 fn void BeatmapParser.parse(&this) {
     parse_key_value_section(this, this.map.general, "[General]", ": ");
     parse_key_value_section(this, this.map.metadata, "[Metadata]", ":");
     parse_key_value_section(this, this.map.difficulty, "[Difficulty]", ":");
+    parse_normal_section(this, this.map.timing_points, "[TimingPoints]");
 }
 
 fn bool BeatmapParser.index_to_section(&this, String section_name) @private {

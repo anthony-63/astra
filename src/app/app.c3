@@ -45,7 +45,7 @@ fn void Astra.render(this) @private {
 }
 
 fn void Astra.update(&this) @private {
-
+    
 }
 
 fn void Astra.run(&this) {
