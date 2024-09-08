@@ -72,6 +72,7 @@ fn void BeatmapParser.parse(&this) {
     parse_key_value_section(this, this.map.difficulty, "[Difficulty]", ":");
     parse_normal_section(this, this.map.timing_points, "[TimingPoints]");
     parse_normal_section(this, this.map.events, "[Events]");
+    parse_normal_section(this, this.map.colours, "[Colours]");
 }
 
 fn bool BeatmapParser.index_to_section(&this, String section_name) @private {

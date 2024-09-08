@@ -10,6 +10,7 @@ struct Beatmap {
     BeatmapDifficultySection difficulty;
     BeatmapTimingPointSection timing_points;
     BeatmapEventSection events;
+    BeatmapColoursSection colours;
 }
 
 fn Beatmap! open_beatmap(String path) @private {

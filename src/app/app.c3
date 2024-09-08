@@ -50,7 +50,7 @@ fn void Astra.update(&this) @private {
 
 fn void Astra.run(&this) {
     this.running = true;
-
+    
     while(this.running) {
         sdl3::Event ev;
         if(sdl3::poll_event(&ev)) {
